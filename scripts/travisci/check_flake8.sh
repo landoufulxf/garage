@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
-# ABSOLUTE VERIFICATION:
-# The following errors are analyzed in all python files across the repository.
-errors_absolute=(
+
+# flake8 rules #################################################################
+
+# Python packages considered local to the project, for the purposes of import
+# order checking. Comma-delimited.
+garage_packages="garage,sandbox,examples,contrib"
+
+### ALL FILES ###
+
+# Error codes applied to all files
+errors_all=(
 # TABS
 E101 # indentation contains mixed spaces and tabs
 W191 # indentation contains tabs
@@ -17,21 +25,15 @@ E702 # multiple statements on one line (semicolon)
 E714 # use is not operator rather than not ... is
 )
 
-# Add the codes of the errors to be ignored for the absolute verification in
-# this array.
-ignored_errors_absolute=(
+# Error codes ignored for all files
+ignored_errors_all=(
 )
 
-errors_absolute="${errors_absolute[@]}"
-ignored_errors_absolute="${ignored_errors_absolute[@]}"
-flake8 --isolated --select="${errors_absolute// /,}" \
-  --ignore="${ignored_errors_absolute// /,}"
 
+### CHANGED FILES ###
 
-# INCREMENTAL VERIFICATION:
-# The following errors are analyzed only in the modified code in the pull
-# request branch.
-errors_change=(
+# Error codes applied to changed files
+errors_changed=(
 # INDENTATION
 E125 # continuation line with same indent as next logical line
 E128 # continuation line under-indented for visual indent
@@ -78,44 +80,63 @@ E722 # do not use bare except, specify exception instead
 E731 # do not assign a lambda expression, use a def
 )
 
-# Add the codes of the errors to be ignored for the absolute verification in
-# this array.
-ignored_errors_change=(
+# Error codes ignored for changed files
+ignored_errors_changed=(
 )
 
+
+### ADDED FILES ###
+
+# Error codes for added files
 # DOCSTRING
 # The following error code enables all the error codes for docstring defined
 # here:
 # http://pep257.readthedocs.io/en/latest/error_codes.html
 # If one of the errors needs to be ignored, just add it to the ignore array.
-erros_add="${errors_change[@]} D"
+errors_added="${errors_change[@]} D"
 
-errors_change="${errors_change[@]}"
-ignored_errors_change="${ignored_errors_change[@]}"
+# Error codes applied to added files
+ignored_errors_added=(
+)
+
+################################################################################
+
+# Find file sets for changed and added files
 if [[ "${TRAVIS_PULL_REQUEST}" != "false" && "${TRAVIS}" == "true" ]]; then
   files_changed="$(git diff "${TRAVIS_COMMIT_RANGE}" --diff-filter=M \
     --name-only)"
   files_added="$(git diff "${TRAVIS_COMMIT_RANGE}" --diff-filter=A \
     --name-only)"
-  flake8 --isolated --import-order-style=google \
-    --application-import-names=sandbox,garage,examples,contrib \
-    --select="${errors_change// /,}" \
-    --ignore="${ignored_errors_change// /,}" "${files_changed}"
-  flake8 --isolated --import-order-style=google \
-    --application-import-names=sandbox,garage,examples,contrib \
-    --select="${erros_add// /,}" \
-    --ignore="${ignored_errors_change// /,}" "${files_added}"
 else
   git remote set-branches --add origin master
   git fetch
   files_changed="$(git diff origin/master --diff-filter=M --name-only)"
   files_added="$(git diff origin/master --diff-filter=A --name-only)"
-  flake8 --isolated --import-order-style=google \
-    --application-import-names=sandbox,garage,examples,contrib \
-    --select="${errors_change// /,}" \
-    --ignore="${ignored_errors_change// /,}" "${files_changed}"
-  flake8 --isolated --import-order-style=google \
-    --application-import-names=sandbox,garage,examples,contrib \
-    --select="${erros_add// /,}" \
-    --ignore="${ignored_errors_change// /,}" "${files_added}"
 fi
+
+
+# Check rules with flake8
+check_flake8() {
+  flake8 --isolated \
+         --import-order-style=google \
+         --application-import-names="${garage_packages}" \
+         "$@"
+}
+
+# All files
+errors_all="${errors_all[@]}"
+ignored_errors_all="${ignored_errors_all[@]}"
+check_flake8 --select="${errors_all// /,}" \
+             --ignore="${ignored_errors_all// /,}"
+
+# Changed files
+errors_change="${errors_changed[@]}"
+ignored_errors_change="${ignored_errors_changed[@]}"
+check_flake8 --select="${errors_changed// /,}" \
+             --ignore="${ignored_errors_changed// /,}" "${files_changed}"
+
+# Added files
+errors_added="${errors_added[@]}"
+ignored_errors_added="${ignored_errors_added[@]}"
+check_flake8 --select="${errors_added// /,}" \
+             --ignore="${ignored_errors_added// /,}" "${files_added}"
