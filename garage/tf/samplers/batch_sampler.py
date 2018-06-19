@@ -2,7 +2,7 @@ import tensorflow as tf
 
 from garage.sampler import parallel_sampler
 from garage.sampler import singleton_pool
-from garage.sampler.base import BaseSampler
+from garage.tf.samplers.base import BaseSampler
 
 
 def worker_init_tf(G):

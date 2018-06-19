@@ -57,19 +57,7 @@ class VPG(BatchPolopt, Serializable):
                 ndim=1 + is_recurrent,
                 dtype=tf.float32,
             )
-            dist = self.policy.distribution
-
-            old_dist_info_vars = {
-                k: tf.placeholder(
-                    tf.float32,
-                    shape=[None] * (1 + is_recurrent) + list(shape),
-                    name='old_%s' % k)
-                for k, shape in dist.dist_info_specs
-            }
-            old_dist_info_vars_list = [
-                old_dist_info_vars[k] for k in dist.dist_info_keys
-            ]
-
+            
             state_info_vars = {
                 k: tf.placeholder(
                     tf.float32,
@@ -89,8 +77,14 @@ class VPG(BatchPolopt, Serializable):
 
             dist_info_vars = self.policy.dist_info_sym(obs_var,
                                                        state_info_vars)
-            logli = dist.log_likelihood_sym(action_var, dist_info_vars)
-            kl = dist.kl_sym(old_dist_info_vars, dist_info_vars)
+            current_dist = self.policy.distribution_factory.create_dist_by_distinfo(dist_info_vars)
+            old_dist_info_vars_list, tf_old_dist = self.policy.distribution_factory.create_empty_dist(self.policy.recurrent)
+
+            logli = current_dist.log_prob(action_var)
+            logli = tf.reduce_sum(logli, axis=-1)
+
+            kl = current_dist.kl_divergence(tf_old_dist)
+            kl = tf.reduce_sum(kl, axis=-1)
 
             # formulate as a minimization problem
             # The gradient of the surrogate objective is the policy gradient
@@ -130,7 +124,7 @@ class VPG(BatchPolopt, Serializable):
         if self.policy.recurrent:
             inputs += (samples_data["valids"], )
         dist_info_list = [
-            agent_infos[k] for k in self.policy.distribution.dist_info_keys
+            agent_infos[k] for k in self.policy.distribution_factory.dist_info_keys
         ]
         loss_before = self.optimizer.loss(inputs)
         self.optimizer.optimize(inputs)

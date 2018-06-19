@@ -9,6 +9,7 @@ from garage.tf.core import LayersPowered
 from garage.tf.core import MLP
 import garage.tf.core.layers as L
 from garage.tf.distributions import DiagonalGaussian
+from garage.tf.distributions import NormalFactory
 from garage.tf.misc import tensor_utils
 from garage.tf.misc.tensor_utils import enclosing_scope
 from garage.tf.policies import StochasticPolicy
@@ -157,7 +158,8 @@ class GaussianMLPPolicy(StochasticPolicy, LayersPowered, Serializable):
             self._l_mean = l_mean
             self._l_std_param = l_std_param
 
-            self._dist = DiagonalGaussian(action_dim)
+            # self._dist = DiagonalGaussian(action_dim)
+            self._dist_fac = NormalFactory(action_dim)
 
             LayersPowered.__init__(self, [l_mean, l_std_param])
             super(GaussianMLPPolicy, self).__init__(env_spec)
@@ -242,3 +244,7 @@ class GaussianMLPPolicy(StochasticPolicy, LayersPowered, Serializable):
     @property
     def distribution(self):
         return self._dist
+
+    @property
+    def distribution_factory(self):
+        return self._dist_fac

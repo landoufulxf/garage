@@ -4,3 +4,4 @@ from garage.tf.distributions.categorical import Categorical
 from garage.tf.distributions.diagonal_gaussian import DiagonalGaussian
 from garage.tf.distributions.recurrent_categorical import RecurrentCategorical
 from garage.tf.distributions.recurrent_diagonal_gaussian import RecurrentDiagonalGaussian
+from garage.tf.distributions.normal_factory import NormalFactory

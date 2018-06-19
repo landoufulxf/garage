@@ -7,7 +7,7 @@ import tensorflow as tf
 from garage.misc import tensor_utils
 import garage.misc.logger as logger
 from garage.sampler import ProgBarCounter
-from garage.sampler.base import BaseSampler
+from garage.tf.samplers.base import BaseSampler
 from garage.tf.envs import ParallelVecEnvExecutor
 from garage.tf.envs import VecEnvExecutor
 
