@@ -4,7 +4,6 @@ from multiprocessing import Queue
 import platform
 from queue import Empty
 from threading import Thread
-
 import numpy as np
 
 from garage.sampler.utils import rollout
@@ -33,6 +32,8 @@ def _worker_start():
                 break
             elif 'update' in msgs:
                 env, policy = msgs['update']
+                # from garage.envs.bullet_env.cartpole_bullet import CartPoleBulletEnv as CartPoleBulletEnv
+                # env = CartPoleBulletEnv(renders=True)
                 # env.start_viewer()
             elif 'demo' in msgs:
                 param_values, max_length = msgs['demo']
