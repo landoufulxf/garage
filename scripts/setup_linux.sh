@@ -50,12 +50,32 @@ case "${response}" in
     ;;
 esac
 
+# libgpuarray (for Theano)
+source activate "${env_name}"
+start_dir="$(pwd)"
+gpuarray_tmp="$(mktemp -d)"
+git clone https://github.com/Theano/libgpuarray.git -b v0.7.6 "${gpuarray_tmp}"
+cd "${gpuarray_tmp}"
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${CONDA_PREFIX}"
+make
+make install
+cd ..
+python setup.py build_ext -L "${CONDA_PREFIX}"/lib -I "${CONDA_PREFIX}"/include
+python setup.py install
+cd "${start_dir}"
+source deactivate
+
+
 echo "Updating conda environment..."
 conda env update
 if [[ "${?}" -ne 0 ]]; then
   echo -e "\e[0;31mError: conda environment could not be updated\e[0m"
   exit 1
 fi
+
+source deactivate
 
 echo "Conda environment created! Make sure to run \`source activate garage\`" \
   "whenever you open a new terminal and want to run programs under garage."

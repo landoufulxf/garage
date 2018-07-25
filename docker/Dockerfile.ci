@@ -15,8 +15,8 @@ RUN \
     bzip2 \
     unzip \
     git \
-    # For building glfw
     cmake \
+    # For building glfw
     xorg-dev \
     # Dummy X server
     xvfb \
@@ -76,6 +76,43 @@ RUN conda update -q -y conda
 COPY environment.yml /root/code/garage/environment.yml
 RUN conda env create -f /root/code/garage/environment.yml && \
   rm -rf /opt/conda/pkgs/*
+
+# libgpuarray (for Theano)
+RUN /bin/bash -c '\
+  source activate garage && \
+  git clone https://github.com/Theano/libgpuarray.git -b v0.7.6 /root/libgpuarray && \
+  cd /root/libgpuarray && \
+  mkdir build && \
+  cd build && \
+  cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${CONDA_PREFIX}" && \
+  make && \
+  make install && \
+  cd /root/libgpuarray && \
+  python setup.py build_ext -L "${CONDA_PREFIX}"/lib -I "${CONDA_PREFIX}"/include && \
+  python setup.py install && \
+  cd /root && \
+  rm -rf /root/libgpuarray \
+'
+
+# warp-ctc (for Theano)
+RUN /bin/bash -c '\
+  source activate garage && \
+  git clone https://github.com/tensorflow/tensorflow.git -b v1.8.0 /root/tensorflow && \
+  git clone https://github.com/baidu-research/warp-ctc.git -b master /root/warp-ctc && \
+  cd /root/warp-ctc && \
+  mkdir build && \
+  cd build && \
+  cmake .. -DCMAKE_INSTALL_PREFIX="${CONDA_PREFIX}" && \
+  make && \
+  make install && \
+  export TENSORFLOW_SRC_PATH="/root/tensorflow" && \
+  cd /root/warp-ctc/tensorflow_binding && \
+  python setup.py build_ext -L "${CONDA_PREFIX}"/lib -I "${CONDA_PREFIX}"/include && \
+  python setup.py install && \
+  cd /root && \
+  rm -rf /root/warp-ctc && \
+  rm -rf /root/tensorflow \
+'
 
 # Extras
 # prevent pip from complaining about available upgrades
