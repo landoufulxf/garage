@@ -16,8 +16,8 @@ class HalfCheetahEnv(MujocoEnv, Serializable):
     FILE = 'half_cheetah.xml'
 
     def __init__(self, *args, **kwargs):
-        super(HalfCheetahEnv, self).__init__(*args, **kwargs)
-        Serializable.__init__(self, *args, **kwargs)
+        Serializable.quick_init(self, locals())
+        super().__init__(*args, **kwargs)
 
     def get_current_obs(self):
         return np.concatenate([

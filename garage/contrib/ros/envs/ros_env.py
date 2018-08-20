@@ -43,7 +43,7 @@ class RosEnv(gym.Env, Serializable):
         raise NotImplementedError
 
     def _initial_setup(self):
-        raise NotImplementedError
+        pass
 
     # ====================================================
     # Need to be implemented in specific robot env

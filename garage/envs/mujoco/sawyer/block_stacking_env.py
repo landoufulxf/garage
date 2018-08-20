@@ -11,9 +11,8 @@ class BlockStackingEnv(SawyerEnv, Serializable):
     FILE = 'block_stacking.xml'
 
     def __init__(self, block_size=0.025, *args, **kwargs):
-        Serializable.__init__(self, *args, **kwargs)
-        super(BlockStackingEnv, self).__init__(
-            initial_goal=None, initial_qpos=None, *args, **kwargs)
+        super().quick_init(locals())
+        super().__init__(initial_goal=None, initial_qpos=None, *args, **kwargs)
         self._distance_threshold = block_size / 2.
         self._done = False
 

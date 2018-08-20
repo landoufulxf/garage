@@ -16,7 +16,6 @@ class BinSortingEnv(SawyerEnv, Serializable):
                  blue_bin_center=(0.85, -0.05),
                  *args,
                  **kwargs):
-        Serializable.__init__(self, *args, **kwargs)
         self._green_bin_center = green_bin_center
         self._red_bin_center = red_bin_center
         self._blue_bin_center = blue_bin_center
@@ -26,8 +25,8 @@ class BinSortingEnv(SawyerEnv, Serializable):
         self._red_done = False
         self._blue_done = False
 
-        super(BinSortingEnv, self).__init__(
-            initial_goal=None, initial_qpos=None, *args, **kwargs)
+        super().quick_init(locals())
+        super().__init__(initial_goal=None, initial_qpos=None, *args, **kwargs)
 
     @overrides
     def step(self, action):

@@ -3,7 +3,8 @@ from garage.core import Parameterized
 
 class Policy(Parameterized):
     def __init__(self, env_spec):
-        Parameterized.__init__(self)
+        super().__init__()
+        super().quick_init(locals())
         self._env_spec = env_spec
 
     # Should be implemented by all policies

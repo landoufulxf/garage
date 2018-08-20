@@ -82,7 +82,7 @@ class MujocoEnv(gym.Env):
         self.dcom = None
         self.current_com = None
         self.reset()
-        super(MujocoEnv, self).__init__()
+        super().__init__()
 
     @cached_property
     @overrides

@@ -26,8 +26,7 @@ class ReacherEnv(SawyerEnv):
 
             return start, goal
 
-        super(ReacherEnv, self).__init__(
-            start_goal_config=generate_start_goal, **kwargs)
+        super().__init__(start_goal_config=generate_start_goal, **kwargs)
 
     def get_obs(self):
         gripper_pos = self.gripper_position

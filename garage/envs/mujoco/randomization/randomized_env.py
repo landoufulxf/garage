@@ -19,7 +19,7 @@ class RandomizedEnv(gym.Env, Serializable):
         """
         Set variations with the node in the XML file at file_path.
         """
-        Serializable.quick_init(self, locals())
+        super().quick_init(locals())
         self._wrapped_env = mujoco_env
         self._variations = variations
         self._file_path = osp.join(MODEL_DIR, mujoco_env.FILE)

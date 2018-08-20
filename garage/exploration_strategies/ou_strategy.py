@@ -1,4 +1,3 @@
-import gym
 import numpy as np
 import numpy.random as nr
 
@@ -9,7 +8,7 @@ from garage.misc.overrides import overrides
 from garage.spaces import Box
 
 
-class OUStrategy(ExplorationStrategy, Serializable):
+class OUStrategy(ExplorationStrategy):
     """
     This strategy implements the Ornstein-Uhlenbeck process, which adds
     time-correlated noise to the actions taken by the deterministic policy.
@@ -21,7 +20,7 @@ class OUStrategy(ExplorationStrategy, Serializable):
     def __init__(self, env_spec, mu=0, theta=0.15, sigma=0.3, **kwargs):
         assert isinstance(env_spec.action_space, Box)
         assert len(env_spec.action_space.shape) == 1
-        Serializable.quick_init(self, locals())
+        super().quick_init(locals())
         self.mu = mu
         self.theta = theta
         self.sigma = sigma
@@ -59,8 +58,7 @@ class OUStrategy(ExplorationStrategy, Serializable):
 if __name__ == "__main__":
     ou = OUStrategy(
         env_spec=AttrDict(
-            action_space=gym.spaces.Box(
-                low=-1, high=1, shape=(1, ), dtype=np.float32)),
+            action_space=Box(low=-1, high=1, shape=(1, ), dtype=np.float32)),
         mu=0,
         theta=0.15,
         sigma=0.3,

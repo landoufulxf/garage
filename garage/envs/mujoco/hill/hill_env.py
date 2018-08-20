@@ -19,6 +19,7 @@ class HillEnv(gym.Wrapper, Serializable):
     HFIELD_FNAME = 'hills.png'
     TEXTURE_FNAME = 'hills_texture.png'
     MIN_DIFFICULTY = 0.05
+    MODEL_CLASS = None
 
     def __init__(self,
                  difficulty=1.0,
@@ -27,15 +28,15 @@ class HillEnv(gym.Wrapper, Serializable):
                  regen_terrain=True,
                  *args,
                  **kwargs):
-        Serializable.quick_init(self, locals())
+        super().quick_init(locals())
 
         self.difficulty = max(difficulty, self.MIN_DIFFICULTY)
         self.texturedir = texturedir
         self.hfield_dir = hfield_dir
 
         model_cls = self.__class__.MODEL_CLASS
-        if model_cls is None:
-            raise "MODEL_CLASS unspecified!"
+        if not model_cls:
+            raise ValueError("MODEL_CLASS unspecified!")
 
         template_file_name = 'hill_' + model_cls.__module__.split(
             '.')[-1] + '.xml.mako'

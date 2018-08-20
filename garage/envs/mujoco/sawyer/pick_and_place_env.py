@@ -25,10 +25,11 @@ class PickAndPlaceEnv(SawyerEnv):
                        _info: dict):
             return env.has_object and env.object_position[2] >= self._goal_configuration.object_pos[2]  # noqa: E501
 
-        super(PickAndPlaceEnv, self).__init__(
+        super().__init__(
             start_goal_config=start_goal_config,
             success_fn=success_fn,
-            **kwargs)
+            **kwargs,
+        )
 
     def get_obs(self):
         gripper_pos = self.gripper_position
