@@ -8,4 +8,5 @@ from garage.envs.noisy_env import NoisyObservationEnv
 from garage.envs.normalized_env import normalize
 from garage.envs.normalized_env import NormalizedEnv
 from garage.envs.occlusion_env import OcclusionEnv
+from garage.envs.point_env import PointEnv
 from garage.envs.sliding_mem_env import SlidingMemEnv

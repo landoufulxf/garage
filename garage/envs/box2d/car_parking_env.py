@@ -23,11 +23,9 @@ class CarParkingEnv(Box2DEnv, Serializable):
         type=float,
         help="Defaulted to 1. which means possible angles are 1. * 2*pi")
     def __init__(self, *args, **kwargs):
-        Serializable.__init__(self, *args, **kwargs)
         self.random_start = kwargs.pop("random_start", True)
         self.random_start_range = kwargs.pop("random_start_range", 1.)
-        super(CarParkingEnv, self).__init__(
-            self.model_path("car_parking.xml"), *args, **kwargs)
+        super().__init__(self.model_path("car_parking.xml"), *args, **kwargs)
         self.goal = find_body(self.world, "goal")
         self.car = find_body(self.world, "car")
         self.wheels = [
@@ -40,6 +38,9 @@ class CarParkingEnv(Box2DEnv, Serializable):
         self.goal_radius = 1.
         self.vel_thres = 1e-1
         self.start_radius = 5.
+
+        # Always call Serializable constructor last
+        Serializable.quick_init(self, locals())
 
     @overrides
     def before_world_step(self, action):

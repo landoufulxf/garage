@@ -26,9 +26,10 @@ class GarageEnv(gym.Wrapper, Parameterized, Serializable, metaclass=ABCMeta):
     """
 
     def __init__(self, env):
-        Serializable.quick_init(self, locals())
-        Parameterized.__init__(self)
         super().__init__(env)
+        Parameterized.__init__(self)
+        # Always call Serializable constructor last
+        Serializable.quick_init(self, locals())
 
     def close(self):
         """

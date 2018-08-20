@@ -13,11 +13,14 @@ class SlidingMemEnv(gym.Wrapper, Serializable):
             n_steps=4,
             axis=0,
     ):
-        Serializable.quick_init(self, locals())
         super().__init__(env)
+
         self.n_steps = n_steps
         self.axis = axis
         self.buffer = None
+
+        # Always call Serializable constructor last
+        Serializable.quick_init(self, locals())
 
     def reset_buffer(self, new_):
         assert self.axis == 0
