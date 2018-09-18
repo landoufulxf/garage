@@ -288,11 +288,8 @@ def ppo_info(info):
     return ppo_infos
 
 
-class SawyerEnvWrapper():
-    def __init__(self,
-                 env: SawyerEnv,
-                 info_callback=ppo_info,
-                 use_max_path_len=True):
+class SawyerEnvWrapper:
+    def __init__(self, env, info_callback=ppo_info, use_max_path_len=True):
         self.env = env
         self._info_callback = info_callback
         self._use_max_path_len = use_max_path_len
