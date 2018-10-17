@@ -102,6 +102,10 @@ print_warning() {
   printf "\e[0;33m%s\e[0m" "${1}"
 }
 
+# Verify this script is running from the correct folder (root directory)
+(more setup.py | grep -q "name='rlgarage'") || _PRINT_HELP=yes die \
+  "This setup script must be run from the root garage directory." 1
+
 # Verify there's a file in the mjkey path
 test -f "${_arg_mjkey}" || _PRINT_HELP=yes die \
   "The path ${_arg_mjkey} of the MuJoCo key is not valid." 1
