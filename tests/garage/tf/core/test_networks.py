@@ -1,6 +1,7 @@
-import tensorflow as tf
-from garage.tf.core.networks import mlp
 import numpy as np
+import tensorflow as tf
+
+from garage.tf.core.networks import mlp
 from tests.fixtures import TfGraphTestCase
 
 
@@ -16,15 +17,61 @@ class TestNetworks(TfGraphTestCase):
 
         self._output_shape = 2
 
+        # We build a default mlp
         self.mlp_f = mlp(
             input_var=self._input,
             output_dim=self._output_shape,
             hidden_sizes=(32, 32),
             hidden_nonlinearity=self.hidden_nonlinearity,
-            hidden_b_init=tf.constant_initializer(value=np.random.rand(1)),
-            name="mlp")
+            name="mlp1")
 
         self.sess.run(tf.global_variables_initializer())
+
+    def test_multiple_same_mlp(self):
+        # We create another mlp with the same name
+        self.mlp_same_copy = mlp(
+            input_var=self._input,
+            output_dim=self._output_shape,
+            hidden_sizes=(32, 32),
+            hidden_nonlinearity=self.hidden_nonlinearity,
+            name="mlp1")
+
+        # We modify the weight of the default mlp and feed
+        # The another mlp created should output the same result
+        with tf.variable_scope("mlp1", reuse=True):
+            w = tf.get_variable("hidden_0/kernel")
+            self.sess.run(w.assign(w + 1))
+            mlp_output = self.sess.run(
+                self.mlp_f, feed_dict={self._input: self.obs_input})
+            mlp_output2 = self.sess.run(
+                self.mlp_same_copy, feed_dict={self._input: self.obs_input})
+
+        np.testing.assert_array_almost_equal(mlp_output, mlp_output2)
+
+    def test_different_mlp(self):
+        # We create another mlp with different name
+        self.mlp_different_copy = mlp(
+            input_var=self._input,
+            output_dim=self._output_shape,
+            hidden_sizes=(32, 32),
+            hidden_nonlinearity=self.hidden_nonlinearity,
+            name="mlp2")
+
+        # Initialize the new mlp variables
+        self.sess.run(tf.global_variables_initializer())
+
+        # We modify the weight of the default mlp and feed
+        # The another mlp created should output different result
+        with tf.variable_scope("mlp1", reuse=True):
+            w = tf.get_variable("hidden_0/kernel")
+            self.sess.run(w.assign(w + 1))
+            mlp_output = self.sess.run(
+                self.mlp_f, feed_dict={self._input: self.obs_input})
+            mlp_output2 = self.sess.run(
+                self.mlp_different_copy,
+                feed_dict={self._input: self.obs_input})
+
+        np.not_equal(mlp_output, mlp_output2)
 
     def test_output_shape(self):
         mlp_output = self.sess.run(
@@ -33,7 +80,7 @@ class TestNetworks(TfGraphTestCase):
         assert mlp_output.shape[1] == self._output_shape
 
     def test_output_value(self):
-        with tf.variable_scope("mlp", reuse=True):
+        with tf.variable_scope("mlp1", reuse=True):
             w = tf.get_variable("hidden_0/kernel")
             h1_w = self.sess.run(w)
             b = tf.get_variable("hidden_0/bias")
@@ -59,3 +106,17 @@ class TestNetworks(TfGraphTestCase):
         # output layer
         h3_out = np.dot(h3_in, out_w) + out_b
         np.testing.assert_array_almost_equal(h3_out, mlp_output)
+
+    def test_weight_normalization(self):
+        self.mlp_f_w_n = mlp(
+            input_var=self._input,
+            output_dim=self._output_shape,
+            hidden_sizes=(32, 32),
+            hidden_nonlinearity=self.hidden_nonlinearity,
+            name="mlp2",
+            weight_normalization=True)
+
+        self.sess.run(tf.global_variables_initializer())
+
+        mlp_output = self.sess.run(
+            self.mlp_f_w_n, feed_dict={self._input: self.obs_input})
