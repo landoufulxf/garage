@@ -40,7 +40,7 @@ _arg_tf_gpu="off"
 print_help ()
 {
   printf '%s\n' "Installer of garage for Linux."
-  printf 'Usage: ./scripts/setup_linux.sh [--mjkey <arg>] [--(no-)modify-bashrc] '
+  printf 'Usage: %s [--mjkey <arg>] [--(no-)modify-bashrc] ' "$0"
   printf '[--(no-)tf-gpu] [-h|--help]\n'
   printf '\t%s\n' "--mjkey: Path of the MuJoCo key (no default)"
   printf '\t%s' "--tf-gpu,--no-tf-gpu: Install TensorFlow GPU instead of the "
