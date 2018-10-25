@@ -33,23 +33,6 @@ def load_progress(progress_csv_path):
     return entries
 
 
-def to_json(stub_object):
-    from garage.misc.instrument import StubObject
-    from garage.misc.instrument import StubAttr
-    if isinstance(stub_object, StubObject):
-        assert stub_object.args
-        data = dict()
-        for k, v in stub_object.kwargs.items():
-            data[k] = to_json(v)
-        data["_name"] = stub_object.proxy_class.__module__ + \
-                        "." + stub_object.proxy_class.__name__
-        return data
-    elif isinstance(stub_object, StubAttr):
-        return dict(
-            obj=to_json(stub_object.obj), attr=to_json(stub_object.attr_name))
-    return stub_object
-
-
 def flatten_dict(d):
     flat_params = dict()
     for k, v in d.items():

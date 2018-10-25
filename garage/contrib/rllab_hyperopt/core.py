@@ -122,20 +122,6 @@ def _launch_ec2(func, exp_prefix, exp_name, params, run_experiment_kwargs):
     run_experiment(func, **kwargs)
 
 
-def _get_stubs(params):
-    module_str = params.pop('task_module')
-    func_str = params.pop('task_function')
-    eval_module_str = params.pop('eval_module')
-    eval_func_str = params.pop('eval_function')
-
-    module = importlib.import_module(module_str)
-    func = getattr(module, func_str)
-    eval_module = importlib.import_module(eval_module_str)
-    eval_func = getattr(eval_module, eval_func_str)
-
-    return func, eval_func
-
-
 task_id = 1
 
 
@@ -147,8 +133,6 @@ def objective_fun(params):
     max_retries = params.pop('max_retries', 0) + 1
     result_timeout = params.pop('result_timeout')
     run_experiment_kwargs = params.pop('run_experiment_kwargs', {})
-
-    func, eval_func = _get_stubs(params)
 
     result_success = False
     while max_retries > 0:
