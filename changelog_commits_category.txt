@@ -1,0 +1,139 @@
+Quality:
+    Testing:
+    05cb9af8a6fbda0f261d9a7ed22a67908f1abd62 Reorganize tests tree (#312)
+    a3f6fe4e2cc030b0b58d9dd403ba9a04c04dce7f Fix travis tests (#311)
+    471475866175d333cd92c7a519b5d0bbcf0c74da Fix bug in tests/tf/policies (#310)
+    a99b3561a5720586f0005803485125731a24790d Set TRPO and PPO benchmark tests big to True (#254)
+    9bcb322bb67b0363eb8c6de819d175e291a5724f Fixed PointEnv for test_env
+    98a3f381ee752504f5e30a7123fb20862f14989b Add unit testing (#191)
+f798f1eac543bd7716c3a5a1d03b7d95e88da65f Fix DmControl Tests (#299)
+58562192d12d7ee1068081e14509d74f96cfcdcc Fix serialization of Gym Environments (#318)
+0d373273116e97fb502ee5ecbff571fe0ed6f80b Add code coverage measurement with codecov (#316)
+9071c117be850a6219fcfb0ff83b722c6cb4217e Centralize examples in garage (#167)
+Bugs:
+d5b9e633295886d91a008c9280e555ff69e02c40 Fix sleeping processes (#295)
+Build:
+4665a2244cf52ed37caba4369b8ea63e75e7c702 Use Docker for TravisCI (#205)
+b76729bce9375036ad5099acfccadafe138c9e9f Check commit messages in the CI (#190)
+Git hooks:
+1174ccc1d19b20319308c847ac9ce069f1bac25a Run some CI checks using pre-commit (#149)
+
+
+Algorithms:
+43153f3f1a061c4d9429233b2a34baa81233fb1e Override plot parameter of algorithm constructor (#119)
+a99483c39cd2e7d11b8dad98c5dd09520ac2e5d3 Change replay buffer initialization (#356)
+dfba4206c8d938d41a592e9fd8ce1f16f4aab1c6 Fix VPG and DDPG to use VectorizedSampler (#329)
+715927ec0acdd087f666b431918a1d28602db0e6 Add reccurrent policy to NPO (#272)
+f900aa231b76e371baaf16062a81c2f54eaed591 Add HER to DDPG (#265)
+8157b5757ac3463d71266e1d48f8e7805733c1b3 Add PPO to garage/tf (#193)
+df7add16f1dba7ff3b0b5ea3a68ff1b9133f1fa4 Add DDPG to TensorFlow (#66)
+
+Packaging:
+828f6ad50b17b39d267ff9a7a3ba204aff46f935 Remove Sawyer Files (#352)
+4169a649b47c8d75b526333e55b27b933a4c0ea7 Remove inter-package convenience imports (#349)
+6978d73989fc185cdb97db0bc00c15148dbb0971 Remove all unused imports (#315)
+5c946bcc6d02cfedf00ab59f027debef95da1a84 Remove cma_es_lib (#314) (Replace
+cma_es_lib with the cma package in pip)
+46d319bba01983c43d8c202b336fb4ff995c89ee Move contrib in garage.contrib (#256)
+a124edcd95c1dcc16070e16244fdfcba6be169e3 Update sawyer environments (#238)
+941ae087a57738630ae147c5512ee009bac93a62 Move Theano-dependent code in garage.theano (#245)
+59615f147a3e6300f817305fc97c3b97c8201014 Update to Python 3.6.6 (#223)
+b9b45a6ac14093f4f5ef81c8355e51b01cbbf2aa Bump Theano to 1.0.2 (#219)
+3c4062c0cdb761e6caee1261c88db8bfab96f05d Move some easy deps from conda to pip (#215)
+404a7d826e6b73d5155175038a279b2acc908ecf Remove empty __init__.py files (#189)
+Installation:
+df640a51f8e28bcea5f625d26f139c4182b4d7df Fixing VERIFIED_OSX_VERSIONS (#357)
+ab7112459ea29a5abd99f876451ece67842b1e5d Theano gpu support (#351)
+4c530f06f830929592814801a37082452f03a32e Update Dockerfile.ci for new mujoco_py install (#353)
+079d8e547e8c5ac562f4c45d15b4a4de2937862e Update setup script for OS X (#279)
+d2fccbafd3c51a7d15364e6888e9c7f75cef839d Update setup_linux.sh based on Dockerfile.ci (#258)
+Dependency bugs:
+085a35d0ca17773871fd0d9415a3797c9c3f360e Fix broken Box2D dependency in fresh install (#335)
+e7d26687ef676137488760949f58b6c778b01e4a Lock dm_control version (#344) (#345)
+
+Misc:
+45e9915ad18a41695bad5f87bf645f5ecdef31df Update LICENSE
+59ba8599391813b5fc7c39268fd97a841eea9246 Update CONTRIBUTING.md
+5c5f63674fe6a39125f0bca1e35a01e2a53f6637 Fix tf plotting for macOS (#192)
+c2ee74823cd35b5a30da6e3994bc0472f2c9f1f0 Update .gitignore (#155)
+96733d8496fd607176dc39b31fe81b54286a113b Add top-level base Space class for garage (#140)
+931822dfffdb8561249dac0f18c69b27d6067f53 Create CONTRIBUTING.md (#52)
+
+Environments:
+3c6a67cb8edb40c74aa9b042756731ddc3f0b7e5 Add dict support to garage (#270) (in
+garage environments)
+a84b7a38ce4e6d7c238b1812f4d004be204269ce Replace ProxyEnv with gym.Wrapper (#253)
+ba55e0cbdffae21079231ecbc6dfb7ecf581ce27 Use gym.GoalEnv for sawyer envs (#198)
+
+97a9bbf77c3bd2bc7ce3963786ea2b60b5f5857d Add support for alphabetizing logger tabular (#124)
+09c99825f969a6ab8581b450c57602f9d07fad86 Add pre-commit to garage
+5378034533a47dad101c6f60e628a64442b439ed Add name_scope in TensorBoardOutput (#118)
+cc5d4627a7306c3586257f29c2def6121d7f04ec Add log_diagnostics to normalized_env
+dfbe8ae2c91ed4b9fbdc6a1dae8ad41be5c2b6c0 Fixed GLEW import issue
+8eedf58dd51efd54579723fd97c092cc5ca09bd8 Add gazebo reacher env (#99)
+797ef6ad76ab6c8085507c71697bd27d15835b91 False positive of flake8 checkers
+a6f8846f635b2eb7f393adf67025236a9a1b54c0 Support different rollout functions TF plotter (#102)
+755592c5c4fb3bc2ef1a1ac451661b63d6432e2f Support multiline imports in check_imports.py (#105)
+3fad0ef5ef0ffb26421a74d203eb93a07df91229 Fix dm_control installation for linux (#100)
+42f47a32ff9373395e852734935f31f8c3ee834b Fix contrib.ros 'from garage.config_personal' should be 'from garage.config' (#96)
+d2821d6b9c16731358d75866440ec31af3b2803a Update normalized_env (#91)
+5b61f8c7e613698304eb86b67f0217fec4f6df60 Fix tf distributions (#97)
+924cc74428aca6b973208b9d64440a0acc5b998d Remove quotes in filename variables in pep8 checks (#89)
+c005820f1ff6158c41e09ceb0d3577f1eab9bf67 Renamed run_experiment_lite to run_experiment
+8f8eb3b6e172cd3bdfb7173064213b60b5f07ee0 Remove blank config_personal.py (#94)
+70c77a3324918a731d2b577a1a623d3aa0e92528 Add mujoco sawyer envs (#76)
+c54169ad4e0d7d7b545b79db85c691a61b6be51b Fix tensorboard creates another TF device issue (#88)
+17347a1682e28fc4bac8c2e922da67f7fa1b2f89 Remove all usage of garage's internal tf.space
+cf7505cb0c6b9de1a7bebda8be5ccdcedbd890f8 Sawyer runtime (#67)
+76f17e588ed436287ad0071b9ad9d8f90a5d4fd3 Check docstrings only on added files (#83)
+7b1cc1ba254f51c7baf9f7fb3ec383edfa4980a5 Fix local package names in flake8 config (#77)
+16016ec67b231896ea3ff885068354636e1bcf2f Add PEP8 checks to the CI
+3c58b86c2bce99a6df99cb2d461fd82ca1242916 Rename rllab to garage (#62)
+f1b2716fbbdd3d7e9674cfffa6ddfba31b501661 Replaced rllab.envs.Env with gym.Env (#58)
+64831a62ff1537047194f5835de9d9237884edc9 Fix check_imports CI script (#64)
+9ff2f5bb74c175606bdafbbb0cd472c6d4ca8e8c Added asynchronous plotting to TensorFlow (#56)
+6c29cc9ed29aa4b85caf71667a1dc1e1f876e292 Remove remnants of sandbox.rocky.tf (#65)
+e4b6b194d224b83b054ad9018aed58b41f659f43 Fix check_imports CI script (#63)
+bcef914f5ae1ee77727005d23b09b7e88c3ac34b Update .gitignore (#61)
+438f9df82b810f1049036ce1925d79e884be0cfe Dynamics randomization for MuJoCo (#51)
+38f5f97cdf4fd266de6a38cb021469ccd3ad5909 Moved sandbox.rocky.tf to rllab.tf (#54)
+f4fcefde8cabc67d43acfaf3d323fe169c340e63 Fix circular imports created by alphabetization (#59)
+fd9a073e56a1c2a03f72ae4df7b5e684134f8dc9 Refactor rllab ros (#50)
+eb43cc8745986a6a388e311620eb76aab1401ff2 Add EditorConfig (#49)
+d94934ecc335f8c3917cb0068f1f3cdafc3cf1f3 Create CODEOWNERS
+d6419f22f58e8a9cde82454126bef90b04d462a5 Formatting tweaks to make the CI green
+1cd44cef190b6b374be3823e806cf381f9973a60 Add import order support to the CI
+a4b5a39206712023fe5a2aa8c5b41aa2113608ac Group and alphabetize imports according to PEP8
+75349b354a9b905b60cb5be5db30e310a4cd1be5 Format with yapf and limit line length to 80 char
+00ec862d92057a0bf2921cf44e9b3af2f0116277 Asynchronous plotting for Theano (#124)
+5c5d3a26b8a8f5a4efc05349b22bda185b18ea2c Upgrade gym to v0.10.5 (#122)
+c32e6cc86ea0307b1fdfe1821ec82c71df66ff80 Add missing convenience imports and fix circular dependency (#113)
+60c68671ebdb5a7f9dd32be836beadee3713cc58 Refactor sawyer robot interface (#115)
+8a5ee1a91d7a25fe57c3cd805bb659246b3efdd4 Add task object manger interface (#114)
+839bfe127288ea4f397154b4d3b23fad683e80d8 Merge tensorboard summary and tensorboard output (#103)
+59bcc7f182c190fc6a79f5fe5cbb26424e24ea17 Implement specific env functions for specific task (#106)
+e9468f61ade2231afd3ff36e2fd515e94ea50797 Fixed glfw throwing segmentation fault, requires reverting back to synchronous plotting (#112)
+06b6de374478b8930cfa970faa410a045e2210d8 Move ros node init to launcher files (#104)
+431590663c394411b16b87d3f9a1a8b4abef697b Add TensorBoard histogram support (#58)
+1cc419fb7713f3c3ca572cc856ec55fb9950f5bc Add robot interface (#101)
+2e5529524e9f838e9f82f8238313557217c67f6b Refactor rllab from rllab.mujoco_py to mujoco_py (v1.5.0) (#91)
+49e750500d6169db6592a67e9b8edb35a45292df Fix missing imports and other small errors (#99)
+4d2417e93598d0effba91f5a3c4eba03334b64ac Support for tensor logging to tensorboard (#88)
+5c42053fcd6821eb39eded56526cfe5f2070418a Add variable scope to symbolic operations using TensorFlow (#72)
+3ddb23d829b684fdb0967bfd9c55cfbb7e5ab4f4 Upgrade Theano to 1.0.1 (#65)
+758636562b2ea1d72a397506a4e4d5d2ccc1201e Remove convenience imports that generate circular dependencies (#87)
+dd3c968da7ac022651d40db59b4aa9c4e3fed147 add gazebo sawyer (#49)
+d49f0398d823c55260d74078c455621d4a2b4bc4 Fix error in Theano when using GPU and TF
+0075a6b8427530acc3eab6ff59016ef4e0f53be6 Import classes and modules in __init__.py of each package (#66)
+bb2475f65ddae62c020c647f87634c5971014c1d Support std_share_network in all GaussianMLP* classes (#69)
+92c41f3734870f9772b36ed64049ca8d0fbb5e5b Cleanup list of dependencies in conda environment (#56) (#60)
+7a4dbb71001403e713e98d6ce0f9a660c61b91f1 Add TensorFlow GPU v1.8 during the setup of the virtual env (#9) (#59)
+b15d069bd9088a806391a4b6bbb1f4c9dd51da42 Add support for dm_control environments (#48)
+0b2776b93f62b87c923e9e86b11aede0667aac09 Add TensorBoard Support
+2cf515cd47c904d560e613650d4a7c1086f82e56 Protect StatefulPool from class methods
+4694327875be9557fe1a7f805f23112bf223541a [travisci] Correct changed file detection
+4fa6bffb59207de3f4de522e46e8deeaf5d51970 TravisCI support
+1f3f06a586233af80850de42fb9e99536162ba7e [tf] Symbolic entropy for DiagonalGaussian
+4eb1e164dfb91535963627365f865499773f4997 Remove chainer from enviroment.yml
+3ae055a5c09cd2b87720bb87a7c9f79777797e74 Set window context before rendering in MjViewer
+6b7f6fb32782e50f3c2b33406e2bdce03e9a65f7 Add window title parameter to MjViewer
